@@ -1,18 +1,15 @@
-## Getting Started
+# Fantasy Football Algorithm 2.0
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Overview 
 
-## Folder Structure
+This is an improvement on my original Fantasy Football Algorithm. The main difference is that now JSON is only used for very general stats like team schedule and team offense/defense rankings.
+I bought a Data Analysis membership to [PlayerProfiler]([url](https://www.playerprofiler.com/)) which allowed me to download a CSV file containing boatloads of player data from every week in the past 5 NFL seasons.
+Since the file was locked behind a paywall, I can't share it here, so you'll just have to take my word that the SQL queries do what they're supposed to (I promise, they do).
 
-The workspace contains two folders by default, where:
+## Algorithm
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+I don't know what kind of algorithm this is, but it works by establishing a baseline point value for each position, then adding or subtracting projected points based on the relevant statistics for each player.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Problems/Optimization
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Rookies are probably super messed up or straight up impossible to calculate, since the method to get averages for a lot of statistics automatically searches to a depth of 16 prior weeks. I could probably resolve this by adding a list of every rookie and checking whether the inputted player is in that list. Then, I could change the average calculating method to search to a certain depth in response to said player. Once I finish writing the actual algorithm, that's something to take care of.
