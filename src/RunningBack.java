@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 public class RunningBack {
     
     private String name;
@@ -5,14 +7,16 @@ public class RunningBack {
     private int currentWeek;
     private int opposingRunDefense;
     private int offensiveRunRank;
+    private double averagePoints;
     private double[] positionalAverages;
 
-    RunningBack(String n, String c, int cw, int oppRD, int offRR, double[] posAVG) {
+    RunningBack(String n, String c, int cw, int oppRD, int offRR, double avgF, double[] posAVG) {
         name = n;
         currentOpponent = c;
         currentWeek = cw;
         opposingRunDefense = oppRD;
         offensiveRunRank = offRR;
+        averagePoints = avgF;
         positionalAverages = posAVG;
     }
 
@@ -28,63 +32,87 @@ public class RunningBack {
         }
     }
 
-    public void calculatePoints(){ 
+    public void calculatePoints() { 
         
-        //Finds average points over the last 16 weeks
-        double totalPoints = 0;
-        for (int i = 0;i<16;i++) {
-            totalPoints+=weeklyStats[i];
-        }
-        double averagePoints = totalPoints/16;
+        //Extract positional data
+        double receptionsDifference = positionalAverages[0];
+        double earlyDownUsage = positionalAverages[1];
+        double targets = positionalAverages[2];
+        double totalTouches = positionalAverages[3];
+        double snapShare = positionalAverages[4];
+        double RZOpportunity = positionalAverages[5];
+        double goalLineCarries = positionalAverages[6];
 
-        //Baseline points expected from RBs
-        double expectedPoints = 10.0;
 
-        //Rewards RBs for performing well, 14 pts/week is typically top 15, 16 pts/week is top 3
+        
+        //Baseline points
+        double expectedPoints = 5.0;
+
+        //Rewards RBs for performing well, 14 pts/week is typically top 20, 18 pts/week is top 6
         if (averagePoints >= 14.0) {
-            expectedPoints+=1.5;
-            if (averagePoints >= 16.0) {
+            System.out.println("+3 for averaging 14+");
+            expectedPoints+=3;
+            if (averagePoints >= 18.0) {
+                System.out.println("+1.5 for averaging 18+");
                 expectedPoints+=1.5;
             }
         }
 
-        //Penalizes RBs for performing badly, 8 pts/week is below top 40
-        if (averagePoints <= 8.0) {
-            expectedPoints-=2;
-        }
-
-        //Factors in opposing defense
-        expectedPoints-=getRanges(defenseAgainst);
-
-        //Factors in offensive line
-        expectedPoints+=getRanges(offensiveLineRank);
-
-        //Factors in rushing offense
-        expectedPoints+=getRanges(offensiveRunRank);
-
-        //Factors in snap percentage, high-usage backs are typically 50% or more
-        if (avgSnapPercentage >= 50.0) {
-            expectedPoints+=1.5;
-        }
-        else {
-            expectedPoints-=1.5;
-        }
-
-        //Factors in average touches, high-usage backs typically get 16-24
-        if (avgTouches >= 16.0) {
-            expectedPoints+=2;
-        }
-        else if (avgTouches <= 16.0 && avgTouches >= 8.0) {
-            expectedPoints+=1;
-        }
-        else {
+        //Penalizes RBs for performing badly, 12 pts/week is below top 30
+        if (averagePoints <= 12.0) {
+            System.out.println("-1 for averaging <12");
             expectedPoints-=1;
         }
 
-        //Factors in average red zone touches, good RBs get 3 or more
-        if (avgRedZoneTouches >= 3.0) {
+        //Rewards receiving backs
+        if (receptionsDifference > -7.0) {
+            System.out.println("+3 for receiving back");
+            expectedPoints+=3;
+        }
+
+        //Early down usage
+        if (earlyDownUsage > 15.0) {
+            System.out.println("+2 for early down usage");
             expectedPoints+=2;
         }
+        else {
+            System.out.println("-1 for low early down usage");
+            expectedPoints-=1;
+        }
+
+        //Targets
+        System.out.println("+ " + Math.round(targets*0.8 * 10.0) / 10.0 + " for targets");
+        expectedPoints+=Math.round(targets*0.8 * 10.0) / 10.0;
+
+        //Total touches
+        System.out.println("+ " + Math.round(totalTouches/10 * 10.0) / 10.0 + " for total touches");
+        expectedPoints+=Math.round(totalTouches/10 * 10.0) / 10.0;
+
+        //Snap share, high-usage backs are typically 50% or more
+        if (snapShare >= 60.0) {
+            System.out.println("+2.5 for snap share");
+            expectedPoints+=2.5;
+        }
+        else {
+            System.out.println("-1.5 for low snap share");
+            expectedPoints-=1.5;
+        }
+
+        //Red zone opportunity
+        System.out.println("+ " + Math.round(RZOpportunity/4 * 10.0) / 10.0 + " for red zone opportunity");
+        expectedPoints+=Math.round(RZOpportunity/4 * 10.0) / 10.0;
+
+        //Goal line work
+        System.out.println("+ " + Math.round(goalLineCarries*2 * 10.0) / 10.0 + " for goal line work");
+        expectedPoints+=Math.round(goalLineCarries*2 * 10.0) / 10.0;
+
+        //Opposing defense
+        System.out.println("- " + getRanges(offensiveRunRank) + " for opposing run defense");
+        expectedPoints-=getRanges(opposingRunDefense);
+
+        //Rushing offense
+        System.out.println("+ " + getRanges(offensiveRunRank) + " for offense's run rank");
+        expectedPoints+=getRanges(offensiveRunRank);
 
         System.out.println();
         System.out.print(name + " is projected ");
@@ -94,7 +122,7 @@ public class RunningBack {
 
     public double getRanges(int rank) {
         if (rank < 5) {
-            return 1.5;
+            return 2.0;
         }
 
         else if (rank > 4 && rank < 9) {
@@ -118,11 +146,11 @@ public class RunningBack {
         }
 
         else if (rank > 24 && rank < 29) {
-            return -1.5;
+            return -2.5;
         }
 
         else {
-            return -2.0;
+            return -5.0;
         }
     }
 

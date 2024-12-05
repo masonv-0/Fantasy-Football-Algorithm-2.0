@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 public class Quarterback{
     
     private String name;
@@ -5,14 +7,16 @@ public class Quarterback{
     private int currentWeek;
     private int opposingPassDefense;
     private int offensivePassRank;
+    private double averagePoints;
     private double [] positionalAverages;
 
-    Quarterback (String n, String c, int cw, int oppPD, int offPR, double[] posAVG) {
+    Quarterback (String n, String c, int cw, int oppPD, int offPR, double avgF, double[] posAVG) {
         name = n;
         currentOpponent = c;
         currentWeek = cw;
         opposingPassDefense = oppPD;
         offensivePassRank = offPR;
+        averagePoints = avgF;
         positionalAverages = posAVG;
     }
 
@@ -30,12 +34,16 @@ public class Quarterback{
 
     public void calculatePoints() {
         
-        //Finds average points over the last 16 weeks
-        double totalPoints = 0;
-        for (int i = 0;i<16;i++) {
-            totalPoints+=weeklyStats[i];
-        }
-        double averagePoints = totalPoints/16;
+        //Extract positional data
+        double avgRushYards = positionalAverages[0];
+        double avgRushTDs = positionalAverages[1];
+        double avgHurries = positionalAverages[2];
+        double avgSacksTaken = positionalAverages[3];
+        double avgPassAttempts = positionalAverages[4];
+        double avgInterceptablePasses = positionalAverages[5];
+        double avgRZCompletions = positionalAverages[6];
+        double avgRZCarries = positionalAverages[7];
+
 
         //Baseline points expected from QBs
         double expectedPoints = 15.0;
@@ -44,20 +52,43 @@ public class Quarterback{
         if (averagePoints >= 20.0) {
             expectedPoints+=1.5;
         }
+
         //Penalizes QBs for performing badly in the past, 15 pts/week is below top 32
         if (averagePoints <= 15.0) {
             expectedPoints-=2;
         }
-        //Factors in opposing defense
-        expectedPoints-=getRanges(defenseAgainst);
-        //Factors in offensive line
-        expectedPoints+=getRanges(offensiveLineRank);
-        //Factors in the passing offense
+
+        //Opposing defense
+        expectedPoints-=getRanges(opposingPassDefense);
+
+        //Passing offense
         expectedPoints+=getRanges(offensivePassRank);
-        //Factors in whether the QB is throwing to a top 10 receiver
-        if (top10Receiver) {
-            expectedPoints+=1.5;
+
+        //Rushing
+        expectedPoints+=Math.round(avgRushYards/10 * 10) / 10.0;
+
+        expectedPoints+=Math.round(avgRushTDs*6 * 10) / 10.0;
+
+        //Hurries and sacks
+        expectedPoints-=Math.round(avgHurries * 0.3 * 10) / 10.0;
+
+        expectedPoints-=Math.round(avgSacksTaken * 10) / 10.0;
+
+        //Not too few pass attempts, not too many (does this matter?)
+        /*
+        if (avgPassAttempts < 18.0 || avgPassAttempts > 32.0) {
+            expectedPoints-=1.0;
         }
+        else {
+            expectedPoints+=1.0;
+        }
+         */
+
+        expectedPoints-=Math.round(avgInterceptablePasses * 10) / 10.0;
+
+        expectedPoints+=Math.round(avgRZCompletions * 0.8 * 10) / 10.0;
+
+        expectedPoints+=Math.round(avgRZCarries * 1.5 *10) / 10.0;
         
         System.out.println();
         System.out.print(name + " is projected ");

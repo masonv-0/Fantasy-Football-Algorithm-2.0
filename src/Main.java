@@ -151,18 +151,17 @@ public class Main {
                 int offensivePassRank = (int) (long) teamLevel.get("OffensivePassRank");
                 positionalAverages = new double[8];
 
-                positionalAverages[0] = getStatFromPastWeeks("fantasy_points", playerName, currentWeek);
-                positionalAverages[1] = getStatFromPastWeeks("rushing_yards", playerName, currentWeek);
-                positionalAverages[2] = getStatFromPastWeeks("rushing_touchdowns", playerName, currentWeek);
-                positionalAverages[3] = getStatFromPastWeeks("oline_hurries", playerName, currentWeek);
-                positionalAverages[4] = getStatFromPastWeeks("sacks_taken", playerName, currentWeek);
-                positionalAverages[5] = getStatFromPastWeeks("pass_attempts", playerName, currentWeek);
+                positionalAverages[0] = getStatFromPastWeeks("rushing_yards", playerName, currentWeek);
+                positionalAverages[1] = getStatFromPastWeeks("rushing_touchdowns", playerName, currentWeek);
+                positionalAverages[2] = getStatFromPastWeeks("oline_hurries", playerName, currentWeek);
+                positionalAverages[3] = getStatFromPastWeeks("sacks_taken", playerName, currentWeek);
+                positionalAverages[4] = getStatFromPastWeeks("pass_attempts", playerName, currentWeek);
                 positionalAverages[5] = getStatFromPastWeeks("interceptable_passes", playerName, currentWeek);
                 positionalAverages[6] = getStatFromPastWeeks("red_zone_completions", playerName, currentWeek);
                 positionalAverages[7] = getStatFromPastWeeks("red_zone_carries", playerName, currentWeek);
 
-                Quarterback player = new Quarterback(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, positionalAverages);
-                player.printAll();
+                Quarterback player = new Quarterback(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, avgFPTs, positionalAverages);
+                player.calculatePoints();
             }
 
 
@@ -170,7 +169,7 @@ public class Main {
             //Running backs
             if (position.equals("RB")) {
                 int offensiveRunRank = (int) (long) teamLevel.get("OffensivePassRank");
-                positionalAverages = new double[12];
+                positionalAverages = new double[7];
 
                 double receptionsDifference = 
                 getStatFromPastWeeks("receptions", playerName, currentWeek) - getStatFromPastWeeks("carries", playerName, currentWeek);
@@ -181,22 +180,21 @@ public class Main {
                 getStatFromPastWeeks("first_down_carries", playerName, currentWeek) + 
                 getStatFromPastWeeks("second_down_carries", playerName, currentWeek);
 
-                positionalAverages[0] = getStatFromPastWeeks("fantasy_points", playerName, currentWeek);
-                positionalAverages[1] = receptionsDifference;
-                positionalAverages[2] = earlyDownUsage;
-                positionalAverages[3] = getStatFromPastWeeks("targets", playerName, currentWeek);
-                positionalAverages[4] = getStatFromPastWeeks("total_touches", playerName, currentWeek);
-                positionalAverages[5] = getStatFromPastWeeks("snap_share", playerName, currentWeek);
-                positionalAverages[6] = getStatFromPastWeeks("red_zone_snaps", playerName, currentWeek);
-                positionalAverages[7] = getStatFromPastWeeks("defenders_in_box_run_snaps", playerName, currentWeek);
-                positionalAverages[8] = getStatFromPastWeeks("defenders_in_box_red_zone_snaps", playerName, currentWeek);
-                positionalAverages[9] = getStatFromPastWeeks("red_zone_carries", playerName, currentWeek);
-                positionalAverages[10] = getStatFromPastWeeks("red_zone_targets", playerName, currentWeek);
-                positionalAverages[11] = getStatFromPastWeeks("goal_line_carries", playerName, currentWeek);
+                double redZoneOpportunity = 
+                getStatFromPastWeeks("red_zone_carries", playerName, currentWeek) +
+                getStatFromPastWeeks("red_zone_targets", playerName, currentWeek);
+
+                positionalAverages[0] = receptionsDifference;
+                positionalAverages[1] = earlyDownUsage;
+                positionalAverages[2] = getStatFromPastWeeks("targets", playerName, currentWeek);
+                positionalAverages[3] = getStatFromPastWeeks("total_touches", playerName, currentWeek);
+                positionalAverages[4] = getStatFromPastWeeks("snap_share", playerName, currentWeek);
+                positionalAverages[5] = redZoneOpportunity;
+                positionalAverages[6] = getStatFromPastWeeks("goal_line_carries", playerName, currentWeek);
                  
 
-                RunningBack player = new RunningBack(teamName, currentOpponent, currentWeek, opposingDefenseRunRank, offensiveRunRank, positionalAverages);
-                player.printAll();
+                RunningBack player = new RunningBack(playerName, currentOpponent, currentWeek, opposingDefenseRunRank, offensiveRunRank, avgFPTs, positionalAverages);
+                player.calculatePoints();
             }
 
 

@@ -63,6 +63,13 @@
         "DefensivePassRank": 10,
         "DefensiveRunRank": 25
     },
+    "DEN": {
+        "schedule": ["SEA", "PIT", "TB", "NYJ", "LV", "LAC", "NO", "CAR", "BAL", "KC", "ATL", "LV", "CLE", "BYE", "IND", "LAC", "CIN", "KC"],
+        "OffensivePassRank": 21,
+        "OffensiveRunRank": 21,
+        "DefensivePassRank": 21,
+        "DefensiveRunRank": 6     
+    },
     "DAL": {
         "schedule": ["CLE", "NO", "BAL", "NYG", "PIT", "DET", "BYE", "SF", "ATL", "PHI", "HOU", "WSH", "NYG", "CIN", "CAR", "TB", "PHI", "WSH"],
         "OffensiveLineRank": 10,
