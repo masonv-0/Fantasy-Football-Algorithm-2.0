@@ -232,8 +232,8 @@ public class Main {
                     player.calculatePoints();
                 }
                 else {
-                    TightEnd player = new TightEnd(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, positionalAverages);
-                    player.printAll();
+                    TightEnd player = new TightEnd(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, avgFPTs, positionalAverages);
+                    player.calculatePoints();
                 }
             }
             

@@ -103,7 +103,7 @@ public class Quarterback{
         expectedPoints-=getRanges(opposingPassDefense);
 
         //Passing offense
-        System.out.println("+ " + getRanges(offensivePassRank) + " for offensive's pass rank");
+        System.out.println("+ " + getRanges(offensivePassRank) + " for offense's pass rank");
         expectedPoints+=getRanges(offensivePassRank);
         
         System.out.println();
