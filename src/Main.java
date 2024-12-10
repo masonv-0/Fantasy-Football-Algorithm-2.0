@@ -167,7 +167,7 @@ public class Main {
 
 
             //Running backs
-            if (position.equals("RB")) {
+            else if (position.equals("RB")) {
                 int offensiveRunRank = (int) (long) teamLevel.get("OffensivePassRank");
                 positionalAverages = new double[7];
 
@@ -200,9 +200,12 @@ public class Main {
 
 
             //Wide Receivers and Tight Ends
-            if (position.equals("WR") || position.equals("TE")) {
+            else {
                 int offensivePassRank = (int) (long) teamLevel.get("OffensivePassRank");
-                positionalAverages = new double[10];
+                positionalAverages = new double[7];
+
+                double targets = getStatFromPastWeeks("targets", playerName, currentWeek);
+                double catchableTargets = getStatFromPastWeeks("catchable_targets", playerName, currentWeek);
 
                 double earlyDownTargets = 
                 getStatFromPastWeeks("first_down_targets", playerName, currentWeek);
@@ -213,20 +216,20 @@ public class Main {
                 getStatFromPastWeeks("goal_line_targets", playerName, currentWeek) +
                 getStatFromPastWeeks("end_zone_targets", playerName, currentWeek);
 
-                positionalAverages[0] = getStatFromPastWeeks("fantasy_points", playerName, currentWeek);
-                positionalAverages[1] = earlyDownTargets;
-                positionalAverages[2] = touchdownTargets;
-                positionalAverages[3] = getStatFromPastWeeks("targets", playerName, currentWeek);
+                double aDOT = 
+                getStatFromPastWeeks("air_yards", playerName, currentWeek) / targets;
+
+                positionalAverages[0] = earlyDownTargets;
+                positionalAverages[1] = touchdownTargets;
+                positionalAverages[2] = aDOT;
+                positionalAverages[3] = catchableTargets;
                 positionalAverages[4] = getStatFromPastWeeks("target_share", playerName, currentWeek);
-                positionalAverages[5] = getStatFromPastWeeks("air_yards", playerName, currentWeek);
-                positionalAverages[6] = getStatFromPastWeeks("slot_snaps", playerName, currentWeek);
-                positionalAverages[7] = getStatFromPastWeeks("catchable_targets", playerName, currentWeek);
-                positionalAverages[8] = getStatFromPastWeeks("contested_targets", playerName, currentWeek);
-                positionalAverages[9] = getStatFromPastWeeks("routes_run", playerName, currentWeek);
+                positionalAverages[5] = getStatFromPastWeeks("slot_snaps", playerName, currentWeek);
+                positionalAverages[6] = getStatFromPastWeeks("routes_run", playerName, currentWeek);
 
                 if (position.equals("WR")) {
-                    WideReceiver player = new WideReceiver(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, positionalAverages);
-                    player.printAll();
+                    WideReceiver player = new WideReceiver(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, avgFPTs, positionalAverages);
+                    player.calculatePoints();
                 }
                 else {
                     TightEnd player = new TightEnd(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, positionalAverages);

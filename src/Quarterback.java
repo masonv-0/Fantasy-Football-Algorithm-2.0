@@ -34,6 +34,8 @@ public class Quarterback{
 
     public void calculatePoints() {
         
+        System.out.println();
+
         //Extract positional data
         double avgRushYards = positionalAverages[0];
         double avgRushTDs = positionalAverages[1];
@@ -50,28 +52,28 @@ public class Quarterback{
 
         //Rewards QBs for performing well in the past, 20 pts/week is typically top 15
         if (averagePoints >= 20.0) {
+            System.out.println("+1.5 for averaging 20+");
             expectedPoints+=1.5;
         }
 
         //Penalizes QBs for performing badly in the past, 15 pts/week is below top 32
         if (averagePoints <= 15.0) {
+            System.out.println("-2 for averaging <15");
             expectedPoints-=2;
         }
 
-        //Opposing defense
-        expectedPoints-=getRanges(opposingPassDefense);
-
-        //Passing offense
-        expectedPoints+=getRanges(offensivePassRank);
-
         //Rushing
+        System.out.println("+ " + Math.round(avgRushYards/10 * 10) / 10.0 + " for average rush yards");
         expectedPoints+=Math.round(avgRushYards/10 * 10) / 10.0;
 
+        System.out.println("+ " + Math.round(avgRushTDs*6 * 10) / 10.0 + " for average rush TDs");
         expectedPoints+=Math.round(avgRushTDs*6 * 10) / 10.0;
 
         //Hurries and sacks
+        System.out.println("- " + Math.round(avgHurries * 0.3 * 10) / 10.0 + " for average hurries");
         expectedPoints-=Math.round(avgHurries * 0.3 * 10) / 10.0;
 
+        System.out.println("- " + Math.round(avgSacksTaken * 10) / 10.0 + " for average sacks taken");
         expectedPoints-=Math.round(avgSacksTaken * 10) / 10.0;
 
         //Not too few pass attempts, not too many (does this matter?)
@@ -84,16 +86,31 @@ public class Quarterback{
         }
          */
 
+        //Interceptable passes
+        System.out.println("- " + Math.round(avgInterceptablePasses * 10) / 10.0 + " for average interceptable passes");
         expectedPoints-=Math.round(avgInterceptablePasses * 10) / 10.0;
 
+        //Red zone completions
+        System.out.println("+ " + Math.round(avgRZCompletions * 0.8 * 10) / 10.0 + " for average red zone completions");
         expectedPoints+=Math.round(avgRZCompletions * 0.8 * 10) / 10.0;
 
+        //Red zone carries
+        System.out.println("+ " + Math.round(avgRZCarries * 1.5 *10) / 10.0 + " for average red zone carries");
         expectedPoints+=Math.round(avgRZCarries * 1.5 *10) / 10.0;
+
+        //Opposing defense
+        System.out.println("- " + getRanges(opposingPassDefense) + " for opposing pass defense");
+        expectedPoints-=getRanges(opposingPassDefense);
+
+        //Passing offense
+        System.out.println("+ " + getRanges(offensivePassRank) + " for offensive's pass rank");
+        expectedPoints+=getRanges(offensivePassRank);
         
         System.out.println();
         System.out.print(name + " is projected ");
         System.out.printf("%.1f", expectedPoints);
         System.out.println(" fantasy points in Week " + currentWeek + " against " + currentOpponent);
+        System.out.println();
     }
 
     public double getRanges(int rank) {

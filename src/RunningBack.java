@@ -34,6 +34,8 @@ public class RunningBack {
 
     public void calculatePoints() { 
         
+        System.out.println();
+
         //Extract positional data
         double receptionsDifference = positionalAverages[0];
         double earlyDownUsage = positionalAverages[1];
@@ -118,6 +120,7 @@ public class RunningBack {
         System.out.print(name + " is projected ");
         System.out.printf("%.1f", expectedPoints);
         System.out.println(" fantasy points in Week " + currentWeek + " against " + currentOpponent);
+        System.out.println();
     }
 
     public double getRanges(int rank) {

@@ -1,6 +1,6 @@
 {
     "ARI": {
-        "schedule": ["BUF", "LAR", "DET", "WSH", "SF", "GB", "LAC", "MIA", "CHI", "NYJ", "BYE", "SEA", "MIN", "SEA", "NE", "CAR", "LAR", "SF"],
+        "schedule": ["BUF", "LAR", "DET", "WAS", "SF", "GB", "LAC", "MIA", "CHI", "NYJ", "BYE", "SEA", "MIN", "SEA", "NE", "CAR", "LAR", "SF"],
         "OffensiveLineRank": 26,
         "OffensivePassRank": 24,
         "OffensiveRunRank": 8,
@@ -8,7 +8,7 @@
         "DefensiveRunRank": 24
     },
     "ATL": {
-        "schedule": ["PIT", "PHI", "KC", "NO", "TB", "CAR", "SEA", "TB", "DAL", "NO", "DEN", "BYE", "LAC", "MIN", "LV", "NYG", "WSH", "CAR"],
+        "schedule": ["PIT", "PHI", "KC", "NO", "TB", "CAR", "SEA", "TB", "DAL", "NO", "DEN", "BYE", "LAC", "MIN", "LV", "NYG", "WAS", "CAR"],
         "OffensiveLineRank": 6,
         "OffensivePassRank": 5,
         "OffensiveRunRank": 17,
@@ -16,7 +16,7 @@
         "DefensiveRunRank": 29
     },
     "BAL": {
-        "schedule": ["KC", "LV", "DAL", "BUF", "CIN", "WSH", "TB", "CLE", "DEN", "CIN", "PIT", "LAC", "PHI", "BYE", "NYG", "PIT", "HOU"],
+        "schedule": ["KC", "LV", "DAL", "BUF", "CIN", "WAS", "TB", "CLE", "DEN", "CIN", "PIT", "LAC", "PHI", "BYE", "NYG", "PIT", "HOU"],
         "OffensiveLineRank": 25,
         "OffensivePassRank": 6,
         "OffensiveRunRank": 1,
@@ -32,7 +32,7 @@
         "DefensiveRunRank": 26
     },
     "CAR": {
-        "schedule": ["NO", "LAC", "LV", "CIN", "CHI", "ATL", "WSH", "DEN", "NO", "NYG", "BYE", "KC", "TB", "PHI", "DAL", "ARI", "TB"],
+        "schedule": ["NO", "LAC", "LV", "CIN", "CHI", "ATL", "WAS", "DEN", "NO", "NYG", "BYE", "KC", "TB", "PHI", "DAL", "ARI", "TB"],
         "OffensiveLineRank": 20,
         "OffensivePassRank": 27,
         "OffensiveRunRank": 19,
@@ -40,7 +40,7 @@
         "DefensiveRunRank": 27
     },
     "CHI": {
-        "schedule": ["TEN", "HOU", "IND", "LAR", "CAR", "JAX", "BYE", "WSH", "ARI", "NE", "GB", "MIN", "DET", "SF", "MIN", "DET", "SEA", "GB"],
+        "schedule": ["TEN", "HOU", "IND", "LAR", "CAR", "JAX", "BYE", "WAS", "ARI", "NE", "GB", "MIN", "DET", "SF", "MIN", "DET", "SEA", "GB"],
         "OffensiveLineRank": 11,
         "OffensivePassRank": 22,
         "OffensiveRunRank": 27,
@@ -48,7 +48,7 @@
         "DefensiveRunRank": 18
     },
     "CIN": {
-        "schedule": ["NE", "KC", "WSH", "CAR", "BAL", "NYG", "CLE", "PHI", "LV", "BAL", "LAC", "BYE", "PIT", "DAL", "TEN", "CLE", "DEN", "PIT"],
+        "schedule": ["NE", "KC", "WAS", "CAR", "BAL", "NYG", "CLE", "PHI", "LV", "BAL", "LAC", "BYE", "PIT", "DAL", "TEN", "CLE", "DEN", "PIT"],
         "OffensiveLineRank": 21,
         "OffensivePassRank": 7,
         "OffensiveRunRank": 30,
@@ -56,12 +56,20 @@
         "DefensiveRunRank": 30
     },
     "CLE": {
-        "schedule": ["DAL", "JAX", "NYG", "LV", "WSH", "PHI", "CIN", "BAL", "LAC", "BYE", "NO", "PIT", "DEN", "PIT", "KC", "CIN", "MIA"],
+        "schedule": ["DAL", "JAX", "NYG", "LV", "WAS", "PHI", "CIN", "BAL", "LAC", "BYE", "NO", "PIT", "DEN", "PIT", "KC", "CIN", "MIA"],
         "OffensiveLineRank": 4,
         "OffensivePassRank": 30,
         "OffensiveRunRank": 26,
         "DefensivePassRank": 10,
         "DefensiveRunRank": 25
+    },
+    "DAL": {
+        "schedule": ["CLE", "NO", "BAL", "NYG", "PIT", "DET", "BYE", "SF", "ATL", "PHI", "HOU", "WAS", "NYG", "CIN", "CAR", "TB", "PHI", "WAS"],
+        "OffensiveLineRank": 10,
+        "OffensiveRunRank": 32,
+        "OffensivePassRank": 2,
+        "DefensivePassRank": 19,
+        "DefensiveRunRank": 24
     },
     "DEN": {
         "schedule": ["SEA", "PIT", "TB", "NYJ", "LV", "LAC", "NO", "CAR", "BAL", "KC", "ATL", "LV", "CLE", "BYE", "IND", "LAC", "CIN", "KC"],
@@ -69,14 +77,6 @@
         "OffensiveRunRank": 21,
         "DefensivePassRank": 21,
         "DefensiveRunRank": 6     
-    },
-    "DAL": {
-        "schedule": ["CLE", "NO", "BAL", "NYG", "PIT", "DET", "BYE", "SF", "ATL", "PHI", "HOU", "WSH", "NYG", "CIN", "CAR", "TB", "PHI", "WSH"],
-        "OffensiveLineRank": 10,
-        "OffensiveRunRank": 32,
-        "OffensivePassRank": 2,
-        "DefensivePassRank": 19,
-        "DefensiveRunRank": 24
     },
     "DET": {
         "schedule": ["LAR", "TB", "ARI", "SEA", "BYE", "DAL", "MIN", "TEN", "GB", "HOU", "JAX", "IND", "CHI", "GB", "BUF", "CHI", "SF", "MIN"],
@@ -95,7 +95,7 @@
         "DefensiveRunRank": 11
     },
     "HOU": {
-        "schedule": ["SF", "BAL", "NYJ", "TEN", "ARI", "LV", "NO", "GB", "MIN", "BYE", "BUF", "IND", "JAX", "CLE", "KC", "NE", "SEA", "LAC"],
+        "schedule": ["IND", "CHI", "MIN", "JAX", "BUF", "NE", "GB", "IND", "NYJ", "DET", "DAL", "TEN", "JAX", "BYE", "MIA", "KC", "BAL", "TEN"],
         "OffensiveLineRank": 22,
         "OffensivePassRank": 1,
         "OffensiveRunRank": 23,
@@ -103,7 +103,7 @@
         "DefensiveRunRank": 17
     },
     "IND": {
-        "schedule": ["NYJ", "BUF", "HOU", "LAC", "SEA", "TEN", "PIT", "TB", "CIN", "BAL", "ARI", "BYE", "CLE", "MIN", "GB", "ATL", "KC", "DET"],
+        "schedule": ["HOU", "GB", "CHI", "PIT", "JAX", "TEN", "MIA", "HOU", "MIN", "BUF", "NYJ", "DET", "NE", "BYE", "DEN", "TEN", "NYG", "JAX"],
         "OffensiveLineRank": 3,
         "OffensivePassRank": 11,
         "OffensiveRunRank": 12,
@@ -111,7 +111,7 @@
         "DefensiveRunRank": 31
     },
     "JAX": {
-        "schedule": ["BUF", "NO", "SEA", "TEN", "MIA", "GB", "IND", "BYE", "DET", "CHI", "HOU", "NYJ", "LV", "KC", "NE", "ARI", "LAC", "PHI"],
+        "schedule": ["MIA", "CLE", "BUF", "HOU", "IND", "CHI", "NE", "GB", "PHI", "MIN", "DET", "BYE", "HOU", "TEN", "NYJ", "LV", "TEN", "IND"],
         "OffensiveLineRank": 23,
         "OffensivePassRank": 20,
         "OffensiveRunRank": 11,
@@ -119,7 +119,7 @@
         "DefensiveRunRank": 8
     },
     "KC": {
-        "schedule": ["BAL", "CLE", "NYG", "LV", "LAR", "HOU", "DEN", "TEN", "SEA", "BUF", "DET", "MIA", "CIN", "BYE", "PHI", "WSH", "DAL", "MIN"],
+        "schedule": ["BAL", "CIN", "ATL", "LAC", "NO", "BYE", "SF", "LV", "TB", "DEN", "BUF", "CAR", "LV", "LAC", "CLE", "HOU", "PIT", "DEN"],
         "OffensiveLineRank": 7,
         "OffensivePassRank": 13,
         "OffensiveRunRank": 17,
@@ -127,14 +127,14 @@
         "DefensiveRunRank": 7
     },
     "LV": {
-        "schedule": ["NE", "ARI", "MIA", "NYJ", "TEN", "DEN", "KC", "BYE", "CHI", "CLE", "GB", "DET", "MIN", "PHI", "HOU", "BAL", "TB", "CIN"],
+        "schedule": ["LAC", "BAL", "CAR", "CLE", "DEN", "PIT", "LAR", "KC", "CIN", "BYE", "MIA", "DEN", "KC", "TB", "ATL", "JAX", "NO", "LAC"],
         "OffensiveLineRank": 19,
         "OffensivePassRank": 15,
         "OffensiveRunRank": 30,
         "DefensivePassRank": 16,
         "DefensiveRunRank": 23
     },
-    "LAR": {
+    "LAR": { 
         "schedule": ["DET", "ARI", "SF", "CHI", "GB", "BYE", "LV", "MIN", "SEA", "MIA", "NE", "PHI", "NO", "BUF", "SF", "NYJ", "ARI"],
         "OffensiveLineRank": 16,
         "OffensivePassRank": 10,
@@ -143,14 +143,14 @@
         "DefensiveRunRank": 32
     },
     "LAC": {
-        "schedule": ["MIA", "DEN", "HOU", "PHI", "ARI", "BAL", "SEA", "GB", "CIN", "BYE", "LV", "IND", "NYJ", "TEN", "BUF", "KC", "WSH", "CHI"],
+        "schedule": ["LV", "CAR", "PIT", "KC", "BYE", "DEN", "ARI", "NO", "CLE", "TEN", "CIN", "BAL", "ATL", "KC", "TB", "DEN", "NE", "LV"],
         "OffensiveLineRank": 12,
         "OffensivePassRank": 30,
         "OffensiveRunRank": 10,
         "DefensivePassRank": 10,
         "DefensiveRunRank": 5
     },
-    "MIA": {
+    "MIA": { 
         "schedule": ["BUF", "JAX", "SEA", "NYJ", "NE", "DEN", "IND", "ARI", "LAR", "LV", "NE", "KC", "GB", "SF", "CLE", "PHI", "LAC"],
         "OffensiveLineRank": 18,
         "OffensivePassRank": 23,
@@ -159,15 +159,14 @@
         "DefensiveRunRank": 19
     },
     "MIN": {
-        "schedule": ["TB", "CHI", "LAC", "LV", "GB", "DET", "CIN", "SF", "BYE", "ARI", "KC", "PHI", "NE", "DAL", "NYJ", "NO", "GB", "DET"],
-        "OffensiveLineRank": 14,
+        "schedule": ["NYG", "SF", "HOU", "GB", "NYJ", "BYE", "DET", "LAR", "IND", "JAX", "TEN", "CHI", "ARI", "ATL", "CHI", "SEA", "GB", "DET"],
         "OffensivePassRank": 17,
         "OffensiveRunRank": 16,
         "DefensivePassRank": 30,
         "DefensiveRunRank": 2
     },
     "NE": {
-        "schedule": ["LV", "NYJ", "WSH", "BUF", "MIA", "BYE", "NYG", "CLE", "PIT", "ARI", "KC", "IND", "DEN", "BAL", "JAX", "PHI", "DAL", "DET"],
+        "schedule": ["CIN", "SEA", "NYJ", "SF", "MIA", "HOU", "JAX", "NYJ", "TEN", "CHI", "LAR", "MIA", "IND", "BYE", "ARI", "BUF", "LAC", "BUF"],
         "OffensiveLineRank": 32,
         "OffensivePassRank": 32,
         "OffensiveRunRank": 9,
@@ -175,7 +174,7 @@
         "DefensiveRunRank": 13
     },
     "NO": {
-        "schedule": ["CAR", "DAL", "PHI", "ATL", "KC", "TB", "DEN", "LAC", "CAR", "ATL", "CLE", "BYE", "LAR", "NYG", "WSH", "GB", "LV"],
+        "schedule": ["CAR", "DAL", "PHI", "ATL", "KC", "TB", "DEN", "LAC", "CAR", "ATL", "CLE", "BYE", "LAR", "NYG", "WAS", "GB", "LV"],
         "OffensiveLineRank": 29,
         "OffensivePassRank": 21,
         "OffensiveRunRank": 7,
@@ -183,7 +182,7 @@
         "DefensiveRunRank": 6
     },
     "NYG": {
-        "schedule": ["DAL", "PHI", "BUF", "LAR", "SEA", "DET", "NE", "NO", "MIN", "WSH", "BYE", "ARI", "SF", "CHI", "LV", "ATL", "CAR"],
+        "schedule": ["MIN", "WAS", "CLE", "DAL", "SEA", "CIN", "PHI", "PIT", "WAS", "CAR", "BYE", "TB", "DAL", "NO", "BAL", "ATL", "IND", "PHI"],
         "OffensiveLineRank": 28,
         "OffensivePassRank": 12,
         "OffensiveRunRank": 24,
@@ -191,7 +190,7 @@
         "DefensiveRunRank": 12
     },
     "NYJ": {
-        "schedule": ["BUF", "IND", "DEN", "NE", "MIA", "BYE", "HOU", "LV", "KC", "ARI", "SEA", "SF", "PHI", "DAL", "TEN", "CLE", "CHI", "BAL"],
+        "schedule": ["SF", "TEN", "NE", "DEN", "MIN", "BUF", "PIT", "NE", "HOU", "ARI", "IND", "BYE", "SEA", "MIA", "JAX", "LAR", "BUF", "MIA"],
         "OffensiveLineRank": 5,
         "OffensivePassRank": 19,
         "OffensiveRunRank": 32,
@@ -199,7 +198,7 @@
         "DefensiveRunRank": 14
     },
     "PHI": {
-        "schedule": ["GB", "ATL", "NO", "TB", "BYE", "CLE", "NYG", "CIN", "JAX", "DAL", "WSH", "LAR", "BAL", "CAR", "PIT", "WSH", "DAL"],
+        "schedule": ["GB", "ATL", "NO", "TB", "BYE", "CLE", "NYG", "CIN", "JAX", "DAL", "WAS", "LAR", "BAL", "CAR", "PIT", "WAS", "DAL"],
         "OffensiveLineRank": 2,
         "OffensivePassRank": 17,
         "OffensiveRunRank": 5,
@@ -207,7 +206,7 @@
         "DefensiveRunRank": 21
     },
     "PIT": {
-        "schedule": ["SF", "SEA", "CIN", "NE", "BAL", "BYE", "LV", "ARI", "CLE", "HOU", "KC", "BUF", "NYG", "NYJ", "DEN", "TEN", "DAL"],
+        "schedule": ["ATL", "DEN", "LAC", "IND", "DAL", "LV", "NYJ", "NYG", "BYE", "WAS", "BAL", "CLE", "CIN", "CLE", "PHI", "BAL", "KC", "CIN"],
         "OffensiveLineRank": 9,
         "OffensivePassRank": 25,
         "OffensiveRunRank": 13,
@@ -215,7 +214,7 @@
         "DefensiveRunRank": 4
     },
     "SF": {
-        "schedule": ["PIT", "DAL", "LAR", "NYG", "SEA", "MIN", "HOU", "DEN", "ARI", "LAC", "BAL", "KC", "PHI", "TB", "LV", "CHI", "NYJ"],
+        "schedule": ["NYJ", "MIN", "LAR", "NE", "ARI", "SEA", "KC", "DAL", "BYE", "TB", "SEA", "GB", "BUF", "CHI", "LAR", "MIA", "DET", "ARI"],
         "OffensiveLineRank": 24,
         "OffensivePassRank": 4,
         "OffensiveRunRank": 8,
@@ -223,7 +222,7 @@
         "DefensiveRunRank": 9
     },
     "SEA": {
-        "schedule": ["DEN", "LAC", "BAL", "CIN", "ARI", "BUF", "DET", "PHI", "TEN", "SF", "NYG", "CLE", "NYJ", "NE", "HOU", "CAR", "LAR"],
+        "schedule": ["DEN", "NE", "MIA", "DET", "NYG", "SF", "ATL", "BUF", "LAR", "BYE", "SF", "ARI", "NYJ", "ARI", "GB", "MIN", "CHI", "LAR"],
         "OffensiveLineRank": 29,
         "OffensivePassRank": 1,
         "OffensiveRunRank": 22,
@@ -231,7 +230,7 @@
         "DefensiveRunRank": 20
     },
     "TB": {
-        "schedule": ["MIN", "DET", "NO", "GB", "KC", "BAL", "CHI", "PHI", "DAL", "ATL", "SEA", "NE", "IND", "NYJ", "PIT", "CIN", "SF"],
+        "schedule": ["WAS", "DET", "DEN", "PHI", "ATL", "NO", "BAL", "ATL", "KC", "SF", "BYE", "NYG", "CAR", "LV", "LAC", "DAL", "CAR", "NO"],
         "OffensiveLineRank": 18,
         "OffensivePassRank": 16,
         "OffensiveRunRank": 20,
@@ -239,15 +238,15 @@
         "DefensiveRunRank": 16
     },
     "TEN": {
-        "schedule": ["HOU", "IND", "JAX", "SEA", "CLE", "BYE", "LV", "KC", "NE", "BUF", "PIT", "NYG", "ARI", "MIA", "PHI", "WSH", "DEN"],
+        "schedule": ["CHI", "NYJ", "GB", "MIA", "BYE", "IND", "BUF", "DET", "NE", "LAC", "MIN", "HOU", "WAS", "JAX", "CIN", "IND", "JAX", "HOU"],
         "OffensiveLineRank": 30,
         "OffensivePassRank": 28,
         "OffensiveRunRank": 18,
         "DefensivePassRank": 1,
         "DefensiveRunRank": 15
     },
-    "WSH": {
-        "schedule": ["ATL", "BUF", "CHI", "PHI", "ARI", "SEA", "LAR", "BYE", "DAL", "CLE", "NE", "NYG", "BAL", "MIN", "NO", "TB", "SF", "CAR"],
+    "WAS": {
+        "schedule": ["TB", "NYG", "CIN", "ARI", "CLE", "BAL", "CAR", "CHI", "NYG", "PIT", "PHI", "DAL", "TEN", "BYE", "NO", "PHI", "ATL", "DAL"],
         "OffensiveLineRank": 27,
         "OffensivePassRank": 13,
         "OffensiveRunRank": 3,
