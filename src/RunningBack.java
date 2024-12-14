@@ -37,84 +37,85 @@ public class RunningBack {
         System.out.println();
 
         //Extract positional data
-        double receptionsDifference = positionalAverages[0];
-        double earlyDownUsage = positionalAverages[1];
-        double targets = positionalAverages[2];
-        double totalTouches = positionalAverages[3];
-        double snapShare = positionalAverages[4];
-        double RZOpportunity = positionalAverages[5];
-        double goalLineCarries = positionalAverages[6];
+        double earlyDownUsage = positionalAverages[0];
+        double rushingYards = positionalAverages[1];
+        double rushingTDs = positionalAverages[2];
+        double catchableTargets = positionalAverages[3];
+        double receivingYards = positionalAverages[4];
+        double receivingTDs = positionalAverages[5];
+        double RZOpportunity = positionalAverages[6];
+        double goalLineCarries = positionalAverages[7];
 
-
-        
-        //Baseline points
-        double expectedPoints = 5.0;
+        double expectedPoints = 0.0;
+        double pointsValue;
 
         //Rewards RBs for performing well, 14 pts/week is typically top 20, 18 pts/week is top 6
         if (averagePoints >= 14.0) {
-            System.out.println("+3 for averaging 14+");
-            expectedPoints+=3;
-            if (averagePoints >= 18.0) {
-                System.out.println("+1.5 for averaging 18+");
-                expectedPoints+=1.5;
-            }
+            System.out.println("+1 for averaging 14+");
+
+            expectedPoints+=1;
         }
 
         //Penalizes RBs for performing badly, 12 pts/week is below top 30
         if (averagePoints <= 12.0) {
             System.out.println("-1 for averaging <12");
-            expectedPoints-=1;
-        }
 
-        //Rewards receiving backs
-        if (receptionsDifference > -7.0) {
-            System.out.println("+3 for receiving back");
-            expectedPoints+=3;
+            expectedPoints-=1;
         }
 
         //Early down usage
         if (earlyDownUsage > 15.0) {
             System.out.println("+2 for early down usage");
+
             expectedPoints+=2;
         }
         else {
             System.out.println("-1 for low early down usage");
+
             expectedPoints-=1;
         }
 
-        //Targets
-        System.out.println("+ " + Math.round(targets*0.8 * 10.0) / 10.0 + " for targets");
-        expectedPoints+=Math.round(targets*0.8 * 10.0) / 10.0;
+        //Pure rushing
+        pointsValue = Math.round(rushingYards * 0.1 * 10.0) / 10.0;
+        System.out.println("+ " + pointsValue + " for rushing yards");
+        expectedPoints += pointsValue;
 
-        //Total touches
-        System.out.println("+ " + Math.round(totalTouches/10 * 10.0) / 10.0 + " for total touches");
-        expectedPoints+=Math.round(totalTouches/10 * 10.0) / 10.0;
+        pointsValue = Math.round(rushingTDs * 6.0 * 10.0) / 10.0;
+        System.out.println("+ " + pointsValue + " for rushing TDs");
+        expectedPoints += pointsValue;
 
-        //Snap share, high-usage backs are typically 50% or more
-        if (snapShare >= 60.0) {
-            System.out.println("+2.5 for snap share");
-            expectedPoints+=2.5;
-        }
-        else {
-            System.out.println("-1.5 for low snap share");
-            expectedPoints-=1.5;
-        }
+        //Receiving
+        pointsValue = Math.round(catchableTargets * 10.0) / 10.0;
+        System.out.println("+ " + pointsValue + " for receptions");
+        expectedPoints += pointsValue;
+
+        pointsValue = Math.round(receivingYards * 0.1 * 10.0) / 10.0;
+        System.out.println("+ " + pointsValue + " for receiving yards");
+        expectedPoints += pointsValue;
+
+        pointsValue = Math.round(receivingTDs * 6.0 * 10.0) / 10.0;
+        System.out.println("+ " + pointsValue + " for receiving TDs");
+        expectedPoints += pointsValue;
 
         //Red zone opportunity
-        System.out.println("+ " + Math.round(RZOpportunity/4 * 10.0) / 10.0 + " for red zone opportunity");
-        expectedPoints+=Math.round(RZOpportunity/4 * 10.0) / 10.0;
+        pointsValue = Math.round(RZOpportunity * 0.25 * 10.0) / 10.0;
+        System.out.println("+ " + pointsValue + " for red zone opportunity");
+        expectedPoints += pointsValue;
 
         //Goal line work
-        System.out.println("+ " + Math.round(goalLineCarries*2 * 10.0) / 10.0 + " for goal line work");
-        expectedPoints+=Math.round(goalLineCarries*2 * 10.0) / 10.0;
+        pointsValue = Math.round(goalLineCarries * 2 * 10.0) / 10.0;
+        System.out.println("+ " + pointsValue + " for goal line work");
+        expectedPoints += pointsValue;
 
         //Opposing defense
-        System.out.println("- " + getRanges(offensiveRunRank) + " for opposing run defense");
-        expectedPoints-=getRanges(opposingRunDefense);
+        pointsValue = getRanges(opposingRunDefense);
+        System.out.println("- " + pointsValue + " for opposing run defense");
+        expectedPoints -= pointsValue;
 
         //Rushing offense
-        System.out.println("+ " + getRanges(offensiveRunRank) + " for offense's run rank");
-        expectedPoints+=getRanges(offensiveRunRank);
+        pointsValue = getRanges(offensiveRunRank);
+        System.out.println("+ " + pointsValue + " for offense's run rank");
+        expectedPoints += pointsValue;
 
         System.out.println();
         System.out.print(name + " is projected ");
@@ -149,11 +150,11 @@ public class RunningBack {
         }
 
         else if (rank > 24 && rank < 29) {
-            return -2.5;
+            return -2.0;
         }
 
         else {
-            return -5.0;
+            return -3.0;
         }
     }
 

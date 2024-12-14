@@ -35,28 +35,15 @@ public class Main {
         return jsonText;
     }
 
-    //REWORK THIS to add a depth counter, use that to figure out rookies
-    public static double getStatFromPastWeeks(String statName, String playerName, int currentWeek) {
+    public static double getStatFromPastWeeks(String statName, String playerName, int currentWeek, int depth) {
         double statistic = 0;
 
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/advanced_gamelogs", "root", "fantasyfootball");
             Statement statement = con.createStatement();
             ResultSet rs;
-            
-            //Find BYE week
-            int byeWeek2023 = 0;
-            ResultSet weeksPlayed2023 = statement.executeQuery
-            ("SELECT week FROM advanced_gamelogs.gamelog2023 WHERE (name = '" + playerName + "')");
-            for (int i = 1;i < 16;i++) {
-                weeksPlayed2023.next();
-                if (Integer.parseInt(weeksPlayed2023.getString("week")) != i) {
-                    byeWeek2023 = i;
-                    break;
-                }
-            }
 
-            int weeksRemaining = 17;
+            int weeksRemaining = depth;
 
             for (int i = (currentWeek - 1);i > 0;i--) {
                 rs = statement.executeQuery
@@ -69,11 +56,7 @@ public class Main {
                 weeksRemaining--;
             }
 
-            //If a player has a BYE in the range of weeks that we grab from, we'd want to extend the query an additional week to make sure we still have 16 data points
-            int stoppingPoint = 17 - weeksRemaining;
-            if (17 > byeWeek2023 && stoppingPoint <= byeWeek2023) {
-                stoppingPoint--;
-            }
+            int stoppingPoint = depth - weeksRemaining;
 
             for (int i = 17;i > stoppingPoint;i--) {
                 rs = statement.executeQuery
@@ -139,9 +122,8 @@ public class Main {
             int opposingDefensePassRank = (int) (long) opponentLevel.get("DefensivePassRank");
             int opposingDefenseRunRank = (int) (long) opponentLevel.get("DefensiveRunRank");
 
-            double avgFPTs = getStatFromPastWeeks("fantasy_points", playerName, currentWeek);
+            double avgFPTs = getStatFromPastWeeks("fantasy_points", playerName, currentWeek, 16);
 
-            ResultSet positionalData;
             double[] positionalAverages;
             
             
@@ -149,16 +131,17 @@ public class Main {
             //Quarterbacks
             if (position.equals("QB")) {
                 int offensivePassRank = (int) (long) teamLevel.get("OffensivePassRank");
-                positionalAverages = new double[8];
+                positionalAverages = new double[10];
 
-                positionalAverages[0] = getStatFromPastWeeks("rushing_yards", playerName, currentWeek);
-                positionalAverages[1] = getStatFromPastWeeks("rushing_touchdowns", playerName, currentWeek);
-                positionalAverages[2] = getStatFromPastWeeks("oline_hurries", playerName, currentWeek);
-                positionalAverages[3] = getStatFromPastWeeks("sacks_taken", playerName, currentWeek);
-                positionalAverages[4] = getStatFromPastWeeks("pass_attempts", playerName, currentWeek);
-                positionalAverages[5] = getStatFromPastWeeks("interceptable_passes", playerName, currentWeek);
-                positionalAverages[6] = getStatFromPastWeeks("red_zone_completions", playerName, currentWeek);
-                positionalAverages[7] = getStatFromPastWeeks("red_zone_carries", playerName, currentWeek);
+                positionalAverages[0] = getStatFromPastWeeks("rushing_yards", playerName, currentWeek, 12);
+                positionalAverages[1] = getStatFromPastWeeks("rushing_touchdowns", playerName, currentWeek, 12);
+                positionalAverages[2] = getStatFromPastWeeks("passing_yards", playerName, currentWeek, 12);
+                positionalAverages[3] = getStatFromPastWeeks("passing_touchdowns", playerName, currentWeek, 12);
+                positionalAverages[4] = getStatFromPastWeeks("oline_hurries", playerName, currentWeek, 12);
+                positionalAverages[5] = getStatFromPastWeeks("sacks_taken", playerName, currentWeek, 12);
+                positionalAverages[6] = getStatFromPastWeeks("interceptable_passes", playerName, currentWeek, 12);
+                positionalAverages[7] = getStatFromPastWeeks("red_zone_completions", playerName, currentWeek, 12);
+                positionalAverages[8] = getStatFromPastWeeks("red_zone_carries", playerName, currentWeek, 12);
 
                 Quarterback player = new Quarterback(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, avgFPTs, positionalAverages);
                 player.calculatePoints();
@@ -169,28 +152,26 @@ public class Main {
             //Running backs
             else if (position.equals("RB")) {
                 int offensiveRunRank = (int) (long) teamLevel.get("OffensivePassRank");
-                positionalAverages = new double[7];
-
-                double receptionsDifference = 
-                getStatFromPastWeeks("receptions", playerName, currentWeek) - getStatFromPastWeeks("carries", playerName, currentWeek);
+                positionalAverages = new double[8];
                 
                 double earlyDownUsage = 
-                getStatFromPastWeeks("first_down_targets", playerName, currentWeek) + 
-                getStatFromPastWeeks("second_down_targets", playerName, currentWeek) + 
-                getStatFromPastWeeks("first_down_carries", playerName, currentWeek) + 
-                getStatFromPastWeeks("second_down_carries", playerName, currentWeek);
+                getStatFromPastWeeks("first_down_targets", playerName, currentWeek, 8) + 
+                getStatFromPastWeeks("second_down_targets", playerName, currentWeek, 8) + 
+                getStatFromPastWeeks("first_down_carries", playerName, currentWeek, 8) + 
+                getStatFromPastWeeks("second_down_carries", playerName, currentWeek, 8);
 
                 double redZoneOpportunity = 
-                getStatFromPastWeeks("red_zone_carries", playerName, currentWeek) +
-                getStatFromPastWeeks("red_zone_targets", playerName, currentWeek);
+                getStatFromPastWeeks("red_zone_carries", playerName, currentWeek, 8) +
+                getStatFromPastWeeks("red_zone_targets", playerName, currentWeek, 8);
 
-                positionalAverages[0] = receptionsDifference;
-                positionalAverages[1] = earlyDownUsage;
-                positionalAverages[2] = getStatFromPastWeeks("targets", playerName, currentWeek);
-                positionalAverages[3] = getStatFromPastWeeks("total_touches", playerName, currentWeek);
-                positionalAverages[4] = getStatFromPastWeeks("snap_share", playerName, currentWeek);
-                positionalAverages[5] = redZoneOpportunity;
-                positionalAverages[6] = getStatFromPastWeeks("goal_line_carries", playerName, currentWeek);
+                positionalAverages[0] = earlyDownUsage;
+                positionalAverages[1] = getStatFromPastWeeks("rushing_yards", playerName, currentWeek, 8);
+                positionalAverages[2] = getStatFromPastWeeks("rushing_touchdowns", playerName, currentWeek, 8);
+                positionalAverages[3] = getStatFromPastWeeks("catchable_targets", playerName, currentWeek, 8);
+                positionalAverages[4] = getStatFromPastWeeks("receiving_yards", playerName, currentWeek, 8);
+                positionalAverages[5] = getStatFromPastWeeks("receiving_touchdowns", playerName, currentWeek, 8);
+                positionalAverages[6] = redZoneOpportunity;
+                positionalAverages[7] = getStatFromPastWeeks("goal_line_carries", playerName, currentWeek, 8);
                  
 
                 RunningBack player = new RunningBack(playerName, currentOpponent, currentWeek, opposingDefenseRunRank, offensiveRunRank, avgFPTs, positionalAverages);
@@ -204,28 +185,28 @@ public class Main {
                 int offensivePassRank = (int) (long) teamLevel.get("OffensivePassRank");
                 positionalAverages = new double[7];
 
-                double targets = getStatFromPastWeeks("targets", playerName, currentWeek);
-                double catchableTargets = getStatFromPastWeeks("catchable_targets", playerName, currentWeek);
+                double targets = getStatFromPastWeeks("targets", playerName, currentWeek, 12);
+                double catchableTargets = getStatFromPastWeeks("catchable_targets", playerName, currentWeek, 12);
 
                 double earlyDownTargets = 
-                getStatFromPastWeeks("first_down_targets", playerName, currentWeek);
-                getStatFromPastWeeks("second_down_targets", playerName, currentWeek);
+                getStatFromPastWeeks("first_down_targets", playerName, currentWeek, 12);
+                getStatFromPastWeeks("second_down_targets", playerName, currentWeek, 12);
 
                 double touchdownTargets = 
-                getStatFromPastWeeks("red_zone_targets", playerName, currentWeek) + 
-                getStatFromPastWeeks("goal_line_targets", playerName, currentWeek) +
-                getStatFromPastWeeks("end_zone_targets", playerName, currentWeek);
+                getStatFromPastWeeks("red_zone_targets", playerName, currentWeek, 12) + 
+                getStatFromPastWeeks("goal_line_targets", playerName, currentWeek, 12) +
+                getStatFromPastWeeks("end_zone_targets", playerName, currentWeek, 12);
 
                 double aDOT = 
-                getStatFromPastWeeks("air_yards", playerName, currentWeek) / targets;
+                getStatFromPastWeeks("air_yards", playerName, currentWeek, 12) / targets;
 
                 positionalAverages[0] = earlyDownTargets;
                 positionalAverages[1] = touchdownTargets;
                 positionalAverages[2] = aDOT;
                 positionalAverages[3] = catchableTargets;
-                positionalAverages[4] = getStatFromPastWeeks("target_share", playerName, currentWeek);
-                positionalAverages[5] = getStatFromPastWeeks("slot_snaps", playerName, currentWeek);
-                positionalAverages[6] = getStatFromPastWeeks("routes_run", playerName, currentWeek);
+                positionalAverages[4] = getStatFromPastWeeks("target_share", playerName, currentWeek, 12);
+                positionalAverages[5] = getStatFromPastWeeks("slot_snaps", playerName, currentWeek, 12);
+                positionalAverages[6] = getStatFromPastWeeks("routes_run", playerName, currentWeek, 8);
 
                 if (position.equals("WR")) {
                     WideReceiver player = new WideReceiver(playerName, currentOpponent, currentWeek, opposingDefensePassRank, offensivePassRank, avgFPTs, positionalAverages);

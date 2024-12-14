@@ -40,16 +40,18 @@ public class WideReceiver{
         double slotSnaps = positionalAverages[5];
         double routesRun = positionalAverages[6];
 
-        double expectedPoints = 0;
-
-
+        double expectedPoints = 0.0;
+        double pointsValue;
 
         //Rewards WRs for performing well, 12 pts/week is typically top 20, 14 pts/week is top 10
         if (averagePoints >= 12.0) {
             System.out.println("+1.5 for averaging 12+");
+
             expectedPoints+=0.75;
+
             if (averagePoints >= 14.0) {
                 System.out.println("+1.5 for averaging 14+");
+
                 expectedPoints+=0.75;
             }
         }
@@ -57,33 +59,42 @@ public class WideReceiver{
         //Penalizes WRs for performing badly, 9 pts/week is below top 40
         if (averagePoints <= 9.0) {
             System.out.println("-2 for averaging <9");
+
             expectedPoints-=2;
         }
 
         //Early down targets
         if (earlyDownTargets >= 2.0) {
             System.out.println("+1 for early down targets");
+
             expectedPoints+=1;
+
             if (earlyDownTargets >= 3.0) {
                 System.out.println("+1 for early down targets");
+
                 expectedPoints+=1;
             }
         }
 
         //Touchdown targets
-        System.out.println("+" + Math.round(touchdownTargets * 3.0 * 10.0) / 10.0 + " for touchdown targets");
-        expectedPoints+=Math.round(touchdownTargets * 3 * 10.0) / 10.0;
+        pointsValue = Math.round(touchdownTargets * 3.0 * 10.0) / 10.0;
+        System.out.println("+" + pointsValue + " for touchdown targets");
+        expectedPoints += pointsValue;
 
         //Catchable targets
-        System.out.println("+" + (Math.round(catchableTargets * 10.0) / 10.0 + Math.round(((aDOT / 10) * catchableTargets) * 10.0) / 10.0) + " for targets and ADOT");
-        expectedPoints+=Math.round(catchableTargets * 10.0) / 10.0 + Math.round(((aDOT / 10) * catchableTargets) * 10.0) / 10.0;
+        pointsValue = Math.round(catchableTargets * 10.0) / 10.0 + Math.round(((aDOT / 10) * catchableTargets) * 10.0) / 10.0;
+        System.out.println("+" + pointsValue + " for targets and ADOT");
+        expectedPoints += pointsValue;
 
         //Target share
         if (targetShare >= 19.0) {
             System.out.println("+0.5 for target share");
+
             expectedPoints+=0.5;
+            
             if (targetShare >=25.0) {
                 System.out.println("+1 for target share");
+
                 expectedPoints+=1;
             }
         }
@@ -91,24 +102,26 @@ public class WideReceiver{
         //Slot snaps
         if (slotSnaps >= 20.0) {
             System.out.println("+2 for slot usage");
+
             expectedPoints+=2;
         }
 
         //Routes run
         if (routesRun <=20.0) {
             System.out.println("-2 for routes run");
+
             expectedPoints-=2;
         }
 
         //Opposing pass defense
-        System.out.println("- " + getRanges(opposingPassDefense) + " for opposing pass defense");
-        expectedPoints-=getRanges(opposingPassDefense);
+        pointsValue = 2 * getRanges(opposingPassDefense);
+        System.out.println("- " + pointsValue + " for opposing pass defense");
+        expectedPoints -= pointsValue;
 
         //Passing offense
-        System.out.println("+ " + getRanges(offensivePassRank) + " for offense's pass rank");
-        expectedPoints+=getRanges(offensivePassRank);
-
-        
+        pointsValue = 0.5 * getRanges(offensivePassRank);
+        System.out.println("+ " + pointsValue + " for offense's pass rank");
+        expectedPoints += pointsValue;
 
         System.out.println();
         System.out.print(name + " is projected ");
