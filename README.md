@@ -1,18 +1,42 @@
-## Getting Started
+## Fantasy Football Algorithm 2.0
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This is my new and improved algorithm to predict a player's fantasy performance in a given week of the 2024 NFL season. It uses SQL to extract data from a database containing full gamelogs from 2023 and 2024. Because these gamelogs were locked behind a paywall, I can't share them here. If you're a college or a business representative, you'll just have to take my word that the SQL queries do what they're supposed to (I promise, they do).
 
-## Folder Structure
+I had a good time learning SQL and how to connect it to Java. There are still some things I could improve about the algorithm, such as the way it handles players who were previously injured for an extended time, but I plan to move on from this project for the time being.
 
-The workspace contains two folders by default, where:
+I learned how to connect to MySQL from this YouTube video: https://www.youtube.com/watch?v=azsXYnkhBuk
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+I learned how to read JSON files from this YouTube video: https://www.youtube.com/watch?v=yLf2-r8w9lQ&t=443s
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+All players are evaluated based on past fantasy performance, but other stats are used in the prediction of different positions, as detailed below.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## QBs
 
-## Dependency Management
+- Rushing performance
+- Passing performance
+- Hurries and sacks
+- Interceptable passes
+- Red zone opportunity
+- Opposing pass defense
+- Offensive pass rank
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## RBs
+
+- Rushing performance
+- Receiving performance
+- Red zone opportunity
+- Opposing run defense
+- Offensive run rank
+
+## WRs and TEs
+
+- Early down work
+- Touchdown targets
+- Catchable targets
+- Average depth of target
+- Target share
+- Slot work
+- Opposing pass defense
+- Offensive pass rank
+
+
